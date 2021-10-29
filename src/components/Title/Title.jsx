@@ -1,6 +1,6 @@
 import "./title.css"
 import md from "../../images/mend.jpg"
-import bf from "../../images/bosf.jpg"
+import bf from "../../images/bosf.png"
 
 const Title = () => {
     return (
@@ -33,8 +33,8 @@ const Title = () => {
             </div>
             <div className="t-right">
                 <div className="t-right-wrapper">
-                    <img src={md} alt="" className="t-img bg" />
-                    <img src={bf} alt="" className="t-img" />
+                    <img src={md} alt="" className="t-bg" />
+                    <img src={bf} alt="" className="t-img" />   
                 </div>
             </div>
         </div>
