@@ -1,0 +1,72 @@
+.c{
+    height: 80vh;
+    width: 100%;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.c-bg{
+    width: 20px;
+    height: 100%;
+    background-color: rgb(5, 5, 100);
+    position: absolute;
+}
+
+.c-wrapper{
+    padding: 50px;
+    display: flex;
+}
+
+.c-left{
+    flex: 1;
+}
+
+.c-title{
+    font-weight: bold;
+    font-size: 100px;
+}
+
+.c-sub{
+    font-weight: 600;
+    font-size: 20px;
+    width: 80%;
+}
+
+.c-right{
+    flex: 1;
+}
+
+.c-desc{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+form{ 
+    margin-top: 20px;
+}
+
+input{
+    width: 50%;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid black;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+textarea {
+    width: 100%;
+    border-bottom: 1px solid black;
+    font-size: 15px;
+    margin-top: 15px;
+}
+
+button {
+    border: none;
+    background-color: rgb(5, 5, 100);
+    color: white;
+    padding: 15px;
+    margin-top: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
