@@ -8,8 +8,9 @@
 .c-bg{
     width: 20px;
     height: 100%;
-    background-color: rgb(5, 5, 100);
+    background-color: yellowgreen;
     position: absolute;
+    left: 0px;
 }
 
 .c-wrapper{
@@ -46,7 +47,7 @@
 }
 
 form{ 
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 input{
@@ -68,10 +69,56 @@ textarea {
 
 button {
     border: none;
-    background-color: rgb(5, 5, 100);
+    background-color: yellowgreen;
     color: white;
     padding: 15px;
     margin-top: 15px;
     font-weight: 600;
     cursor: pointer;
+    margin-bottom: 0px;
+}
+
+
+@media screen and (max-width: 480px) {
+    .c{
+        height: 60vh;
+    }
+    
+    .c-wrapper{
+        flex-direction: column;
+        padding: 0px 50px;
+    }
+    
+    .c-sub{
+        display: none;
+    }
+
+    .c-title{
+        font-size: 30px;
+    }
+
+    .c-desc{
+        font-size: 15px;
+    }
+
+    .c-done{
+        margin-left: 20px;
+    }
+
+    form {
+        margin-top: 0px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    input {
+        width: 35%;
+        height: 40px;
+        margin: 10px;
+        margin-left: 0px;
+    }
+
+    button{
+        margin-top: 10px;
+    }
 }

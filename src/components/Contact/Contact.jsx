@@ -1,11 +1,15 @@
 import './contact.css'
 import { useRef, useState } from 'react'
 import emailjs from 'emailjs-com';
+import { useContext } from "react"
+import { ThemeContext } from "../../context";
 
 const Contact = () => {
 
 const form = useRef();
 const [done, setDone] = useState(false)
+const theme = useContext(ThemeContext)
+const toggled = theme.state.toggled
 
     const sendEmail = (e) => {
     e.preventDefault();
@@ -21,8 +25,9 @@ const [done, setDone] = useState(false)
     }
     return (
         <div className="c"> 
-            <div className="c-bg"></div>
+            
             <div className="c-wrapper">
+            <div className="c-bg" style={{ backgroundColor: toggled ? "rgb(5, 5, 100)" :  "yellowgreen"}}></div>
                 <div className="c-left">
                     <h1 className="c-title">
                         Contact me
@@ -32,6 +37,7 @@ const [done, setDone] = useState(false)
                     </div>
                 </div>
                 <div className="c-right">
+                
                     <p className="c-desc">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. Ut aliquet tristique nisl vitae volutpat.
                     </p>
@@ -40,7 +46,7 @@ const [done, setDone] = useState(false)
                         <input type="text" placeholder="Subject" name="user_subject"/>
                         <input type="text" placeholder="Email" name="user_email"/>
                         <textarea name="user_message" rows="5"></textarea>
-                        <button>Submit</button>
+                        <button style={{ backgroundColor: toggled ? "rgb(5, 5, 100)" :  "yellowgreen"}}>Submit</button>
                         <div className="c-done">
                             {done && 'Thank you for your letter.'}
                         </div>

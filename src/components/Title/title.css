@@ -84,3 +84,18 @@
     top: 0;
     right: 0;
 }
+
+
+@media screen and (max-width: 480px) {
+    .t{
+        flex-direction: column;
+    }
+
+    .t-left-wrapper{
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+    }
+}
