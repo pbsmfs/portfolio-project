@@ -3,14 +3,14 @@ import { useRef, useState } from 'react'
 import emailjs from 'emailjs-com';
 import { useContext } from "react"
 import { ThemeContext } from "../../context";
-
+import Header from '../Header/Header';
 const Contact = () => {
 
 const form = useRef();
 const [done, setDone] = useState(false)
 const theme = useContext(ThemeContext)
 const toggled = theme.state.toggled
-
+console.log(toggled)
     const sendEmail = (e) => {
     e.preventDefault();
 
@@ -24,7 +24,9 @@ const toggled = theme.state.toggled
       });
     }
     return (
-        <div className="c"> 
+        <>
+        <Header />
+        <div className="c" style={{ backgroundColor: toggled ? "#222" : "white", color: toggled && "white" }}> 
             
             <div className="c-wrapper">
             <div className="c-bg" style={{ backgroundColor: toggled ? "rgb(5, 5, 100)" :  "yellowgreen"}}></div>
@@ -54,6 +56,7 @@ const toggled = theme.state.toggled
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

@@ -22,11 +22,16 @@
 }
 
 .pl-list{
+    padding-top: 70px;
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
+.pl-list-item {
+    text-align: left;
+    font-size: large;
+}
 
 @media screen and (max-width: 480px) {
     .pl{

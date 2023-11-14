@@ -1,0 +1,27 @@
+.h-btn-wrapper {
+    padding-left: 50px;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    width: 97.4%;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: space-around; */
+    background: wheat;
+}
+
+.h-link + .h-link {
+    margin-left: 10px;
+}
+
+.h-link {
+    border: none;
+    background-color: yellowgreen;
+    color: white;
+    padding: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}

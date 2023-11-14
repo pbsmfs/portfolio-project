@@ -43,14 +43,17 @@
 .a-title{
     font-weight: bold;
     font-size: 60px;
+    margin-left: 15px;
 }
 
 .a-sub{
     font-size: 40px;
+    margin-left: 15px;
 }
 
 .a-desc{
     font-size: 20px;
+    margin-right: 15px;
 }
 
 
