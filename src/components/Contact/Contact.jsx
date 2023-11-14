@@ -14,7 +14,7 @@ console.log(toggled)
     const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('service_ok3ysug', 'template_8mkv4k9', form.current, 'user_WMuCMQzlDdsB7UILHcLFp')
+    emailjs.sendForm('service_2t314w3', 'template_pbf8owc', form.current, 'dMbl7Q5PD2WDi8nCX')
       .then((result) => {
           console.log(result.text);
           setDone(true)
