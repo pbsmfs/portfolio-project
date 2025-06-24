@@ -7,13 +7,12 @@ import { ThemeContext } from "../../context";
 const Darkmode = () => {
     const theme = useContext(ThemeContext);
 
-    // Initialize theme from localStorage on component mount
     useEffect(() => {
         const savedTheme = localStorage.getItem('themePreference');
         if (savedTheme) {
             theme.dispatch({ type: "SET", payload: JSON.parse(savedTheme) });
         }
-    }, []); // Empty dependency array means this runs once on mount
+    }, [theme]); 
 
     const handleClick = () => {
         const newState = !theme.state.toggled;
