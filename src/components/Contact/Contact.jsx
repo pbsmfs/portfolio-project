@@ -4,13 +4,12 @@ import emailjs from 'emailjs-com';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context';
 import Header from '../Header/Header';
-import { io } from 'socket.io-client';
+import { webSocketService } from '../../utils/websocket';
 
 const Contact = () => {
   const form = useRef();
   const [done, setDone] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
-  const [socket, setSocket] = useState(null);
   const theme = useContext(ThemeContext);
   const toggled = theme.state.toggled;
 
@@ -31,26 +30,18 @@ const Contact = () => {
 
   const [isFormValid, setIsFormValid] = useState(false);
 
-  // WebSocket setup
-  useEffect(() => {
-    const newSocket = io('http://localhost:4000', {
-      withCredentials: true,
-      transports: ['websocket', 'polling']
-    });
-    setSocket(newSocket);
 
-    // Listen for message count updates
-    newSocket.on('updateCount', (count) => {
+  useEffect(() => {
+    webSocketService.connect('http://localhost:4000');
+    webSocketService.registerCallback('updateCount', (count) => {
       setMessageCount(count);
     });
 
-    // Get initial count
-    newSocket.on('connect', () => {
-      newSocket.emit('getCount');
-    });
-
-    return () => newSocket.close();
+    return () => {
+      webSocketService.disconnect();
+    };
   }, []);
+
 
   // Form validation
   useEffect(() => {
@@ -123,9 +114,7 @@ const Contact = () => {
         });
 
         // Notify server about new message
-        if (socket) {
-          socket.emit('newMessage');
-        }
+        webSocketService.sendNewMessage();
       })
       .catch((error) => {
         console.log(error.text);
