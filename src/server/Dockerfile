@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 4000
-CMD ["node", "server.js"]
+CMD ["sh", "-c", "npx knex migrate:latest --knexfile=db/knexfile.js && node index.js"]

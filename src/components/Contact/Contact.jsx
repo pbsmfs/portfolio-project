@@ -94,31 +94,50 @@ const Contact = () => {
     }));
   };
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
     
     if (!isFormValid) return;
-
-    emailjs.sendForm('service_2t314w3', 'template_pbf8owc', form.current, 'dMbl7Q5PD2WDi8nCX')
-      .then((result) => {
-        console.log(result.text);
-        setDone(true);
-        setTimeout(() => setDone(false), 5000);
-        
-        // Reset form
-        setFormData({
-          from_name: '',
-          from_email: '',
-          user_subject: '',
-          message: ''
-        });
-
-        // Notify server about new message
-        webSocketService.sendNewMessage();
-      })
-      .catch((error) => {
-        console.log(error.text);
+  
+    try {
+      // Добавляем credentials для CORS
+      const response = await fetch('http://localhost:4000/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include',
+        mode: 'cors'
       });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      await emailjs.sendForm(
+        'service_2t314w3', 
+        'template_pbf8owc', 
+        form.current, 
+        'dMbl7Q5PD2WDi8nCX'
+      );
+  
+      setDone(true);
+      setTimeout(() => setDone(false), 5000);
+      
+      // Сброс формы
+      setFormData({
+        from_name: '',
+        from_email: '',
+        user_subject: '',
+        message: ''
+      });
+  
+    } catch (error) {
+      console.error('Error:', error);
+      // Обработка ошибки для пользователя
+    }
   };
 
   return (

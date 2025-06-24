@@ -1,14 +1,31 @@
 version: '3.8'
 
 services:
+  db:
+    image: "postgres:14-alpine"
+    ports: 
+      - "54321:5432"
+    environment: 
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres_web
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   client:
+    depends_on: 
+      - db
     build: .
     ports:
       - "3000:3000"
     restart: unless-stopped
   server:
+    depends_on: 
+      - db
     build: ./src/server
     ports: 
       - "4000:4000"
     restart: unless-stopped
+
+volumes:
+  postgres_data:
   
