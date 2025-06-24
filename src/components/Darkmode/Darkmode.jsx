@@ -1,23 +1,39 @@
-import "./darkmode.css"
-import sun from "../../images/sun.png"
-import moon from "../../images/moon.png"
-import { useContext } from "react"
-import { ThemeContext } from "../../context"
+import "./darkmode.css";
+import sun from "../../images/sun.png";
+import moon from "../../images/moon.png";
+import { useContext, useEffect } from "react";
+import { ThemeContext } from "../../context";
 
 const Darkmode = () => {
-    const theme = useContext(ThemeContext)
+    const theme = useContext(ThemeContext);
+
+    // Initialize theme from localStorage on component mount
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('themePreference');
+        if (savedTheme) {
+            theme.dispatch({ type: "SET", payload: JSON.parse(savedTheme) });
+        }
+    }, []); // Empty dependency array means this runs once on mount
 
     const handleClick = () => {
-        theme.dispatch({type: "TOGGLE"})
-    }
+        const newState = !theme.state.toggled;
+        theme.dispatch({ type: "TOGGLE" });
+        
+        // Save to localStorage
+        localStorage.setItem('themePreference', JSON.stringify(newState));
+    };
 
     return (
         <div className="d">
-            <img src={sun} alt="" className="d-icon" />
-            <img src={moon} alt="" className="d-icon" />
-            <div className="d-button" onClick={handleClick} style={{left: theme.state.toggled ? 0 : 25}}></div>
+            <img src={sun} alt="Light mode" className="d-icon" />
+            <img src={moon} alt="Dark mode" className="d-icon" />
+            <div 
+                className="d-button" 
+                onClick={handleClick} 
+                style={{ left: theme.state.toggled ? 0 : 25 }}
+            ></div>
         </div>
-    )
-}
+    );
+};
 
-export default Darkmode
+export default Darkmode;

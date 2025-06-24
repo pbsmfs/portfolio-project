@@ -1,24 +1,41 @@
+// In your context file (e.g., context.js)
 import { createContext, useReducer } from "react";
 
-export const ThemeContext = createContext()
+const INITIAL_STATE = {
+    toggled: false
+};
 
-const INITIAL_STATE = { toggled: false }
-
-const themeReducer = (state, action) => {
-    switch (action.type) {
-        case "TOGGLE":
-            return { toggled: !state.toggled }
-        default:
-            return state
+// Check localStorage for saved preference
+if (typeof window !== 'undefined') {
+    const savedTheme = localStorage.getItem('themePreference');
+    if (savedTheme) {
+        INITIAL_STATE.toggled = JSON.parse(savedTheme);
     }
 }
 
-export const ThemeProvider = (props) => {
-    const [state, dispatch] = useReducer(themeReducer, INITIAL_STATE)
+export const ThemeContext = createContext(INITIAL_STATE);
+
+const ThemeReducer = (state, action) => {
+    switch (action.type) {
+        case "TOGGLE":
+            return {
+                toggled: !state.toggled
+            };
+        case "SET":
+            return {
+                toggled: action.payload
+            };
+        default:
+            return state;
+    }
+};
+
+export const ThemeContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(ThemeReducer, INITIAL_STATE);
 
     return (
-        <ThemeContext.Provider value={{state, dispatch}}>
-            {props.children}
+        <ThemeContext.Provider value={{ state, dispatch }}>
+            {children}
         </ThemeContext.Provider>
-    )
-}
+    );
+};
