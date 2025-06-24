@@ -1,8 +1,5 @@
 import About from "./components/About/About";
 import Contact from "./components/Contact/Contact";
-import Darkmode from "./components/Darkmode/Darkmode";
-import ProjectList from "./components/ProjectList/ProjectList";
-import Title from "./components/Title/Title";
 import Root from "./Root";
 import { useContext} from "react"
 import { ThemeContext } from "./context";
@@ -10,13 +7,14 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import socketIO from 'socket.io-client';
+
+const socket = socketIO.connect('http://localhost:4000');
 
 const App = () => {
   const theme = useContext(ThemeContext)
   const toggled = theme.state.toggled
-  console.log(toggled)
   const router = createBrowserRouter([
-  
     {
       path: "/",
       element: <Root />,
@@ -31,15 +29,8 @@ const App = () => {
     },
   ]);
 
-  return <div style={{ backgroundColor: toggled ? "#222" : "white", color: toggled && "white" }}>
-      {/* <Darkmode/> */}
-      
+  return <div style={{ backgroundColor: toggled ? "#222" : "white", color: toggled && "white" }}>     
       <RouterProvider router={router} />
-      
-      {/* 
-      <About/>
-      <ProjectList/>
-      <Contact/> */}
   </div>;
 };
 

@@ -1,13 +1,14 @@
 .c{
-    height: 80vh;
+    height: 100vh;
     width: 100%;
-    position: relative;
+    /* position: relative; */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
 }
 
 .c-bg{
     width: 20px;
-    height: 95%;
+    height: 40vh;
     background-color: yellowgreen;
     position: absolute;
     left: 0px;
@@ -16,6 +17,9 @@
 .c-wrapper{
     padding: 50px;
     display: flex;
+    position: fixed;
+    height: calc(100vh - 100px); 
+    overflow-y: auto; 
 }
 
 .c-left{

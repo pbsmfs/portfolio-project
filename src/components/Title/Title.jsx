@@ -1,12 +1,12 @@
 import "./title.css"
 import md from "../../images/mend.jpg"
-import bf from "../../images/dibil.png"
+// import bf from "../../images/dibil.png"
 import Header from "../Header/Header"
 const Title = () => (<>
 
     <Header />
     <div className="t">
-        <img src={bf} alt="" className="t-img" />
+        {/* <img src={bf} alt="" className="t-img" /> */}
         <div className="t-left">
 
             <div className="t-left-wrapper">
@@ -14,7 +14,7 @@ const Title = () => (<>
                     Hello, my name is
                 </div>
                 <div className="t-name">
-                    Fedor
+                    Fyodor
                 </div>
                 <div className="t-items">
                     <div className="t-items-wrapper">
@@ -22,7 +22,7 @@ const Title = () => (<>
                             junior programmer
                         </div>
                         <div className="t-item">
-                            17y.o.
+                            19y.o.
                         </div>
                         <div className="t-item">
                             from Russia
@@ -37,9 +37,9 @@ const Title = () => (<>
 
         </div>
         <div className="t-right">
-            <div className="t-right-wrapper">
+            {/* <div className="t-right-wrapper">
                 <img src={md} alt="" className="t-bg" />
-            </div>
+            </div> */}
         </div>
 
 

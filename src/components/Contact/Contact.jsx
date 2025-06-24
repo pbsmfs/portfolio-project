@@ -2,8 +2,8 @@ import './contact.css'
 import { useRef, useState } from 'react'
 import emailjs from 'emailjs-com';
 import { useContext } from "react"
-import { ThemeContext } from "../../../context";
-import Header from '../components/Header/Header';
+import { ThemeContext } from "../../context";
+import Header from '../Header/Header';
 const Contact = () => {
 
 const form = useRef();
