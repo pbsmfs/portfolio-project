@@ -7,9 +7,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import socketIO from 'socket.io-client';
 
-const socket = socketIO.connect('http://localhost:4000');
 
 const App = () => {
   const theme = useContext(ThemeContext)

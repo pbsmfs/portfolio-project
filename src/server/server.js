@@ -1,30 +1,41 @@
-// server/index.js
 const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
+const http = require('http').createServer(app);
+const io = require('socket.io')(http, {
   cors: {
-    origin: 'http://localhost:3000', // Allow connections from your React app
-    methods: ['GET', 'POST'],
-  },
+    origin: "http://localhost:3000", // Разрешаем подключение с этого адреса
+    methods: ["GET", "POST"],
+    credentials: true
+  }
 });
+
+// Дополнительные CORS заголовки для обычных HTTP запросов
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
+let messageCount = 0;
 
 io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
-
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg); // Broadcast the message to all connected clients
+  console.log('New client connected');
+  
+  socket.emit('updateCount', messageCount);
+  
+  socket.on('newMessage', () => {
+    messageCount++;
+    io.emit('updateCount', messageCount);
   });
-
+  
   socket.on('disconnect', () => {
-    console.log(`User disconnected: ${socket.id}`);
+    console.log('Client disconnected');
   });
 });
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+const PORT = 4000;
+http.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
