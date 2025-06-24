@@ -12,7 +12,7 @@ const Darkmode = () => {
         if (savedTheme) {
             theme.dispatch({ type: "SET", payload: JSON.parse(savedTheme) });
         }
-    }, [theme]); 
+    }); 
 
     const handleClick = () => {
         const newState = !theme.state.toggled;
