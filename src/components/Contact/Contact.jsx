@@ -2,15 +2,14 @@ import './contact.css'
 import { useRef, useState } from 'react'
 import emailjs from 'emailjs-com';
 import { useContext } from "react"
-import { ThemeContext } from "../../context";
-import Header from '../Header/Header';
+import { ThemeContext } from "../../../context";
+import Header from '../components/Header/Header';
 const Contact = () => {
 
 const form = useRef();
 const [done, setDone] = useState(false)
 const theme = useContext(ThemeContext)
 const toggled = theme.state.toggled
-console.log(toggled)
     const sendEmail = (e) => {
     e.preventDefault();
 
@@ -44,10 +43,10 @@ console.log(toggled)
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. Ut aliquet tristique nisl vitae volutpat.
                     </p>
                     <form ref={form} onSubmit={sendEmail}>
-                        <input type="text" placeholder="Name" name="user_name"/>
+                        <input type="text" placeholder="Name" name="from_name"/>
                         <input type="text" placeholder="Subject" name="user_subject"/>
-                        <input type="text" placeholder="Email" name="user_email"/>
-                        <textarea name="user_message" rows="5"></textarea>
+                        <input type="text" placeholder="Email" name="from_email"/>
+                        <textarea name="message" rows="5"></textarea>
                         <button style={{ backgroundColor: toggled ? "rgb(5, 5, 100)" :  "yellowgreen"}}>Submit</button>
                         <div className="c-done">
                             {done && 'Thank you for your letter.'}

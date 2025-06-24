@@ -2,7 +2,7 @@ import "./darkmode.css"
 import sun from "../../images/sun.png"
 import moon from "../../images/moon.png"
 import { useContext } from "react"
-import { ThemeContext } from "../../context"
+import { ThemeContext } from "../../../context"
 
 const Darkmode = () => {
     const theme = useContext(ThemeContext)
