@@ -1,20 +1,21 @@
+require('dotenv').config({ path: require('find-config')('.env') });
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: "http://localhost:3000", 
+    origin: process.env.REACT_APP_CLIENT_URL,
     methods: ["GET", "POST"],
     credentials: true
   }
 });
 const bodyParser = require('body-parser');
 const knexConfig = require('./db/knexfile'); 
-const knex = require('knex')(knexConfig); 
+const knex = require('knex')(knexConfig);
 
 // Middleware
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin', process.env.REACT_APP_CLIENT_URL);
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -36,11 +37,8 @@ async function initializeMessageCount() {
 
 initializeMessageCount();
 
-// WebSocket соединения
 io.on('connection', (socket) => {
   console.log('New client connected');
-  
-  // Отправляем текущий счетчик при подключении
   socket.emit('updateCount', messageCount);
   
   socket.on('disconnect', () => {
@@ -48,17 +46,14 @@ io.on('connection', (socket) => {
   });
 });
 
-// Маршрут для сохранения сообщений
 app.post('/api/messages', async (req, res) => {
   try {
     const { from_name, from_email, user_subject, message } = req.body;
     
-    // Валидация данных
     if (!from_name || !from_email || !user_subject || !message) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
-    // Вставка данных в базу
     const [newMessage] = await knex('messages').insert({
       name: from_name,
       email: from_email,
@@ -67,11 +62,9 @@ app.post('/api/messages', async (req, res) => {
       date: new Date()
     }).returning('*');
     
-    // Обновляем счетчик из базы данных
     const result = await knex('messages').count('* as count').first();
     messageCount = result.count;
     
-    // Отправляем обновленный счетчик всем клиентам
     io.emit('updateCount', messageCount);
     
     res.status(201).json(newMessage);
@@ -81,7 +74,6 @@ app.post('/api/messages', async (req, res) => {
   }
 });
 
-// Маршрут для получения количества сообщений
 app.get('/api/messages/count', async (req, res) => {
   try {
     const result = await knex('messages').count('* as count').first();
@@ -92,7 +84,7 @@ app.get('/api/messages/count', async (req, res) => {
   }
 });
 
-const PORT = 4000;
+const PORT = process.env.REACT_APP_WS_URL.split(':').slice(-1)[0] || 4000;
 http.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on ${process.env.REACT_APP_WS_URL}`);
 });
