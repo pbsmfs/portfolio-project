@@ -1,9 +1,11 @@
+require('dotenv').config({ path: require('find-config')('.env') });
+
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: "http://localhost:3000", 
+    origin: process.env.REACT_APP_CLIENT_URL,
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -14,7 +16,7 @@ const knex = require('knex')(knexConfig);
 
 // Middleware
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin', process.env.REACT_APP_CLIENT_URL);
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -92,7 +94,7 @@ app.get('/api/messages/count', async (req, res) => {
   }
 });
 
-const PORT = 4000;
+const PORT = process.env.REACT_APP_WS_URL.split(':').slice(-1)[0];
 http.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on ${process.env.REACT_APP_WS_URL}`);
 });

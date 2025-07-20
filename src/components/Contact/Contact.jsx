@@ -32,11 +32,11 @@ const Contact = () => {
 
 
   useEffect(() => {
-    webSocketService.connect('http://localhost:4000');
+    webSocketService.connect(process.env.REACT_APP_WS_URL);
     webSocketService.registerCallback('updateCount', (count) => {
       setMessageCount(count);
     });
-
+  
     return () => {
       webSocketService.disconnect();
     };
@@ -101,7 +101,7 @@ const Contact = () => {
   
     try {
       // Добавляем credentials для CORS
-      const response = await fetch('http://localhost:4000/api/messages', {
+      const response = await fetch(process.env.REACT_APP_API_URL+'/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,10 +117,10 @@ const Contact = () => {
       }
   
       await emailjs.sendForm(
-        'service_2t314w3', 
-        'template_pbf8owc', 
+        process.env.REACT_APP_EMAILJS_SERVICE_ID, 
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID, 
         form.current, 
-        'dMbl7Q5PD2WDi8nCX'
+        process.env.REACT_APP_EMAILJS_USER_ID
       );
   
       setDone(true);
